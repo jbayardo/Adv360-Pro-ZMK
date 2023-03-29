@@ -15,7 +15,7 @@
 #define AS(keycode) &as LS(keycode) keycode
 
 // Autoshift with autoctrl. Single tap is the key, press and hold is shift + key, double press is control + key
-#define ASC(keycode) &tdmt_#keycode
+#define ASC(keycode) &tdmt_ ## keycode
 
 // Default behavior for keys
 #define XK(keycode) ASC(keycode)
