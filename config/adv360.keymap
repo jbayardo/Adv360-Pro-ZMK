@@ -14,12 +14,6 @@
 // Autoshift
 #define AS(keycode) &as LS(keycode) keycode
 
-// Autoshift with autoctrl. Single tap is the key, press and hold is shift + key, double press is control + key
-#define ASC(keycode) &tdmt_ ## keycode
-
-// Default behavior for keys
-#define XK(keycode) ASC(keycode)
-
 // Tab
 // Single tap is tab, held is Alt + Tab
 #define XTAB &mt LGUI(TAB) TAB
@@ -438,11 +432,11 @@
 
         default_layer {
             bindings = <
- XK(EQUAL) XK(N1)    XK(N2) XK(N3) XK(N4)  XK(N5) &tog 1                                                                     &mo 3              XK(N6) XK(N7) XK(N8)    XK(N9)   XK(N0)   XK(MINUS)
-      XTAB XK(Q)     XK(W)  XK(E)  XK(R)   XK(T)  &none                                                                      &none              XK(Y)  XK(U)  XK(I)     XK(O)    XK(P)    XK(BSLH)
-   &kp ESC XK(A)     XK(S)  XK(D)  XK(F)   XK(G)  &macro_unmapped  &kp LCTRL  &kp LALT   &none   &none  &kp LGUI  &kp RCTRL  &macro_ctrl_shift  XK(H)  XK(J)  XK(K)     XK(L)    XK(SEMI) XK(SQT)
- &kp LSHFT XK(Z)     XK(X)  XK(C)  XK(V)   XK(B)  &none            &none      &kp HOME   &none   &none  &kp PG_UP &none      &none              XK(N)  XK(M)  XK(COMMA) XK(DOT)  XK(FSLH) &kp RSHFT
-     &mo 2 XK(GRAVE) XCAPS  XLEFT  XRIGHT         XBSPC            XDEL       &kp END                   &kp PG_DN &kp ENTER  &kp SPACE          XUP    XDOWN  XK(LBKT)  XK(RBKT) &mo 2
+ &tdmt_EQUAL &tdmt_N1    &tdmt_N2 &tdmt_N3 &tdmt_N4  &tdmt_N5 &tog 1                                                                     &mo 3              &tdmt_N6 &tdmt_N7 &tdmt_N8    &tdmt_N9   &tdmt_N0   &tdmt_MINUS
+      XTAB &tdmt_Q     &tdmt_W  &tdmt_E  &tdmt_R   &tdmt_T  &none                                                                      &none              &tdmt_Y  &tdmt_U  &tdmt_I     &tdmt_O    &tdmt_P    &tdmt_BSLH
+   &kp ESC &tdmt_A     &tdmt_S  &tdmt_D  &tdmt_F   &tdmt_G  &macro_unmapped  &kp LCTRL  &kp LALT   &none   &none  &kp LGUI  &kp RCTRL  &macro_ctrl_shift  &tdmt_H  &tdmt_J  &tdmt_K     &tdmt_L    &tdmt_SEMI &tdmt_SQT
+ &kp LSHFT &tdmt_Z     &tdmt_X  &tdmt_C  &tdmt_V   &tdmt_B  &none            &none      &kp HOME   &none   &none  &kp PG_UP &none      &none              &tdmt_N  &tdmt_M  &tdmt_COMMA &tdmt_DOT  &tdmt_FSLH &kp RSHFT
+     &mo 2 &tdmt_GRAVE XCAPS  XLEFT  XRIGHT         XBSPC            XDEL       &kp END                   &kp PG_DN &kp ENTER  &kp SPACE          XUP    XDOWN  &tdmt_LBKT  &tdmt_RBKT &mo 2
             >;
         };
 
