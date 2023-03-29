@@ -5,45 +5,75 @@
  * SPDX-License-Identifier: MIT
  */
 
-
-/* THIS FILE WAS GENERATED!
- *
- * This file was generated automatically. You may or may not want to
- * edit it directly.
- */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/backlight.h>
 
+// Autoshift
+#define AS(keycode) &as LS(keycode) keycode
+
+// Autoshift with autoctrl. Single tap is the key, press and hold is shift + key, double press is control + key
+#define ASC(keycode) &tdmt LS(keycode) keycode LC(keycode)
+
+// Default behavior for keys
+#define XK(keycode) ASC(keycode)
+
+// Tab
+// Single tap is tab, held is Alt + Tab
+#define XTAB &mt LGUI(TAB) TAB
+
+// Caps Lock.
+// Single tap is a cap word, held tap is caps lock
+#define XCAPS &mt CAPSLOCK &caps_word
+
+// Arrow 
+// Single tap is the action, double tap is action with control
+#define ARROW(x) &mt LC(x) x
+#define XLEFT  ARROW(UP)
+#define XRIGHT ARROW(RIGHT)
+#define XUP    ARROW(UP)
+#define XDOWN  ARROW(DOWN)
+
+// Backspace
+// Single tap is backspace, double tap is Control + Backspace
+#define XBSPC &mt LC(BSPC) BSPC
+#define XDEL  &mt LC(DEL) DEL
+
 / {
   behaviors {
     #include "macros.dtsi"
 
-    hm: homerow_mods {
+    as: auto_shift {
         compatible = "zmk,behavior-hold-tap";
-        label = "HOMEROW_MODS";
+        label = "AUTO_SHIFT";
         #binding-cells = <2>;
-        tapping-term-ms = <200>;
-        quick_tap_ms = <175>;
+        tapping_term_ms = <135>;
+        quick_tap_ms = <0>;
         flavor = "tap-preferred";
         bindings = <&kp>, <&kp>;
+    };
+
+    tdmt: tap_dance_mod_tap {
+        compatible = "zmk,behavior-tap-dance";
+        label = "TAP_DANCE_MOD_TAP";
+        #binding-cells = <0>;
+        tapping-term-ms = <135>;
+        bindings = <&mt>, <&kp>;
     };
   };
 
     keymap {
         compatible = "zmk,keymap";
 
-
         default_layer {
             bindings = <
- &kp EQUAL     &kp N1      &kp N2    &kp N3     &kp N4  &kp N5              &tog 1                                                                          &mo 3  &kp N6  &kp N7     &kp N8    &kp N9    &kp N0  &kp MINUS
-   &kp TAB      &kp Q       &kp W     &kp E      &kp R   &kp T               &none                                                                          &none   &kp Y   &kp U      &kp I     &kp O     &kp P   &kp BSLH
-   &kp ESC      &kp A       &kp S     &kp D      &kp F   &kp G               &none  &kp LCTRL  &kp LALT   &none   &none   &kp LGUI  &kp RCTRL  &macro_macro_ct_sf   &kp H   &kp J      &kp K     &kp L  &kp SEMI    &kp SQT
- &kp LSHFT      &kp Z       &kp X     &kp C      &kp V   &kp B               &none      &none  &kp HOME   &none   &none  &kp PG_UP      &none               &none   &kp N   &kp M  &kp COMMA   &kp DOT  &kp FSLH  &kp RSHFT
-     &mo 2  &kp GRAVE  &caps_word  &kp LEFT  &kp RIGHT                    &kp BSPC    &kp DEL   &kp END                  &kp PG_DN  &kp ENTER           &kp SPACE          &kp UP   &kp DOWN  &kp LBKT  &kp RBKT      &mo 2
+ XK(EQUAL) XK(N1)    XK(N2) XK(N3) XK(N4)  XK(N5) &tog 1                                                                     &mo 3              XK(N6) XK(N7) XK(N8)    XK(N9)   XK(N0)   XK(MINUS)
+      XTAB XK(Q)     XK(W)  XK(E)  XK(R)   XK(T)  &none                                                                      &none              XK(Y)  XK(U)  XK(I)     XK(O)    XK(P)    XK(BSLH)
+   &kp ESC XK(A)     XK(S)  XK(D)  XK(F)   XK(G)  &macro_unmapped  &kp LCTRL  &kp LALT   &none   &none  &kp LGUI  &kp RCTRL  &macro_ctrl_shift  XK(H)  XK(J)  XK(K)     XK(L)    XK(SEMI) XK(SQT)
+ &kp LSHFT XK(Z)     XK(X)  XK(C)  XK(V)   XK(B)  &none            &none      &kp HOME   &none   &none  &kp PG_UP &none      &none              XK(N)  XK(M)  XK(COMMA) XK(DOT)  XK(FSLH) &kp RSHFT
+     &mo 2 XK(GRAVE) XCAPS  XLEFT  XRIGHT         XBSPC            XDEL       &kp END                   &kp PG_DN &kp ENTER  &kp SPACE          XUP    XDOWN  XK(LBKT)  XK(RBKT) &mo 2
             >;
         };
 
