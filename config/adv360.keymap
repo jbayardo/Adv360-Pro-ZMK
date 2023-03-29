@@ -15,10 +15,18 @@
 #define AS(keycode) &as LS(keycode) keycode
 
 // Autoshift with autoctrl. Single tap is the key, press and hold is shift + key, double press is control + key
-#define ASC(keycode) &tdmt LS(keycode) keycode LC(keycode)
+#define ASC(keycode) &tdmt_#keycode
 
 // Default behavior for keys
 #define XK(keycode) ASC(keycode)
+
+#define XK_DECL(keycode) tdmt_#keycode: tap_dance_mod_tap { \
+        compatible = "zmk,behavior-tap-dance"; \
+        label = "TAP_DANCE_MOD_TAP"; \
+        #binding-cells = <3>; \
+        tapping-term-ms = <135>; \
+        bindings = <&mt LS(#keycode) #keycode>, <&kp LC(#keycode)>; \
+    };
 
 // Tab
 // Single tap is tab, held is Alt + Tab
@@ -55,13 +63,53 @@
         bindings = <&kp>, <&kp>;
     };
 
-    tdmt: tap_dance_mod_tap {
-        compatible = "zmk,behavior-tap-dance";
-        label = "TAP_DANCE_MOD_TAP";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt>, <&kp>;
-    };
+    XK_DECL(EQUAL);
+    XK_DECL(N1);
+    XK_DECL(N2);
+    XK_DECL(N3);
+    XK_DECL(N4);
+    XK_DECL(N5);
+    XK_DECL(N6);
+    XK_DECL(N7);
+    XK_DECL(N8);
+    XK_DECL(N9);
+    XK_DECL(N0);
+    XK_DECL(MINUS);
+    XK_DECL(Q);
+    XK_DECL(W);
+    XK_DECL(E);
+    XK_DECL(R);
+    XK_DECL(T);
+    XK_DECL(Y);
+    XK_DECL(U);
+    XK_DECL(I);
+    XK_DECL(O);
+    XK_DECL(P);
+    XK_DECL(BSLH);
+    XK_DECL(A);
+    XK_DECL(S);
+    XK_DECL(D);
+    XK_DECL(F);
+    XK_DECL(G);
+    XK_DECL(H);
+    XK_DECL(J);
+    XK_DECL(K);
+    XK_DECL(L);
+    XK_DECL(SEMI);
+    XK_DECL(SQT);
+    XK_DECL(Z);
+    XK_DECL(X);
+    XK_DECL(C);
+    XK_DECL(V);
+    XK_DECL(B);
+    XK_DECL(N);
+    XK_DECL(M);
+    XK_DECL(COMMA);
+    XK_DECL(DOT);
+    XK_DECL(FSLH);
+    XK_DECL(GRAVE);
+    XK_DECL(LBKT);
+    XK_DECL(RBKT);
   };
 
     keymap {
