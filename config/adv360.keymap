@@ -11,21 +11,29 @@
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/backlight.h>
 
-// Autoshift
-#define AS(keycode) &as LS(keycode) keycode
+&sk {
+    release-after-ms = <200>;
+    quick-release;
+};
 
-// TODO: shorten the taps dance wait time, and increase the autoshift time
+#define LDF 0
+#define LKP 1
+#define LFN 2
+#define LMD 3
 
-// Tab
-// Single tap is tab, held is Alt + Tab
+// Letters. Use auto-shift.
+#define XL(keycode) &as LS(keycode) keycode
+
+// Modifiers. 
+#define XM(keycode) &sk keycode
+
+// Tab. Single tap is tab, held is Alt + Tab
 #define XTAB &mt LG(TAB) TAB
 
-// Caps Lock.
-// Single tap is a cap word, held tap is caps lock
+// Caps Lock. Single tap is a cap word, held tap is caps lock
 #define XCAPS &mt CAPSLOCK &caps_word
 
-// Arrow 
-// Single tap is the action, double tap is action with control
+// Arrow. Single tap is the action, double tap is action with control
 #define ARROW(x) &mt LC(x) x
 #define XLEFT  ARROW(LEFT)
 #define XRIGHT ARROW(RIGHT)
@@ -34,10 +42,23 @@
 #define XPG_UP ARROW(PG_UP)
 #define XPG_DN ARROW(PG_DN)
 
-// Backspace
-// Single tap is backspace, double tap is Control + Backspace
-#define XBSPC &mt LC(BSPC) BSPC
-#define XDEL  &mt LC(DEL) DEL
+// Backspace. Single tap is backspace, double tap is Control + Backspace
+#define XBSPC ARROW(BSPC)
+#define XDEL  ARROW(DEL)
+
+// Alt + Control
+#define XMOD1 &sk LA(LCTRL)
+
+// Hyper
+#define XMOD2 &sk LG(LS(LA(LCTRL)))
+
+// Alt + Shift
+#define XMOD3 &sk LS(LALT)
+
+// Control + Shift
+#define XMOD4 &sk LS(LCTRL)
+
+// See: https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
 
 / {
   behaviors {
@@ -52,336 +73,6 @@
         flavor = "tap-preferred";
         bindings = <&kp>, <&kp>;
     };
-
-    xp_EQUAL: xp_EQUAL {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_EQUAL";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(EQUAL) EQUAL>, <&kp LC(EQUAL)>;
-    };
-    xp_N1: xp_N1 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N1";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N1) N1>, <&kp LC(N1)>;
-    };
-    xp_N2: xp_N2 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N2";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N2) N2>, <&kp LC(N2)>;
-    };
-    xp_N3: xp_N3 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N3";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N3) N3>, <&kp LC(N3)>;
-    };
-    xp_N4: xp_N4 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N4";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N4) N4>, <&kp LC(N4)>;
-    };
-    xp_N5: xp_N5 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N5";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N5) N5>, <&kp LC(N5)>;
-    };
-    xp_N6: xp_N6 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N6";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N6) N6>, <&kp LC(N6)>;
-    };
-    xp_N7: xp_N7 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N7";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N7) N7>, <&kp LC(N7)>;
-    };
-    xp_N8: xp_N8 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N8";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N8) N8>, <&kp LC(N8)>;
-    };
-    xp_N9: xp_N9 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N9";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N9) N9>, <&kp LC(N9)>;
-    };
-    xp_N0: xp_N0 {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N0";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N0) N0>, <&kp LC(N0)>;
-    };
-    xp_MINUS: xp_MINUS {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_MINUS";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(MINUS) MINUS>, <&kp LC(MINUS)>;
-    };
-    xp_Q: xp_Q {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_Q";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(Q) Q>, <&kp LC(Q)>;
-    };
-    xp_W: xp_W {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_W";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(W) W>, <&kp LC(W)>;
-    };
-    xp_E: xp_E {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_E";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(E) E>, <&kp LC(E)>;
-    };
-    xp_R: xp_R {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_R";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(R) R>, <&kp LC(R)>;
-    };
-    xp_T: xp_T {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_T";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(T) T>, <&kp LC(T)>;
-    };
-    xp_Y: xp_Y {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_Y";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(Y) Y>, <&kp LC(Y)>;
-    };
-    xp_U: xp_U {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_U";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(U) U>, <&kp LC(U)>;
-    };
-    xp_I: xp_I {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_I";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(I) I>, <&kp LC(I)>;
-    };
-    xp_O: xp_O {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_O";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(O) O>, <&kp LC(O)>;
-    };
-    xp_P: xp_P {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_P";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(P) P>, <&kp LC(P)>;
-    };
-    xp_BSLH: xp_BSLH {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_BSLH";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(BSLH) BSLH>, <&kp LC(BSLH)>;
-    };
-    xp_A: xp_A {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_A";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(A) A>, <&kp LC(A)>;
-    };
-    xp_S: xp_S {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_S";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(S) S>, <&kp LC(S)>;
-    };
-    xp_D: xp_D {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_D";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(D) D>, <&kp LC(D)>;
-    };
-    xp_F: xp_F {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_F";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(F) F>, <&kp LC(F)>;
-    };
-    xp_G: xp_G {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_G";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(G) G>, <&kp LC(G)>;
-    };
-    xp_H: xp_H {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_H";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(H) H>, <&kp LC(H)>;
-    };
-    xp_J: xp_J {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_J";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(J) J>, <&kp LC(J)>;
-    };
-    xp_K: xp_K {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_K";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(K) K>, <&kp LC(K)>;
-    };
-    xp_L: xp_L {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_L";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(L) L>, <&kp LC(L)>;
-    };
-    xp_SEMI: xp_SEMI {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_SEMI";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(SEMI) SEMI>, <&kp LC(SEMI)>;
-    };
-    xp_SQT: xp_SQT {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_SQT";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(SQT) SQT>, <&kp LC(SQT)>;
-    };
-    xp_Z: xp_Z {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_Z";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(Z) Z>, <&kp LC(Z)>;
-    };
-    xp_X: xp_X {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_X";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(X) X>, <&kp LC(X)>;
-    };
-    xp_C: xp_C {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_C";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(C) C>, <&kp LC(C)>;
-    };
-    xp_V: xp_V {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_V";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(V) V>, <&kp LC(V)>;
-    };
-    xp_B: xp_B {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_B";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(B) B>, <&kp LC(B)>;
-    };
-    xp_N: xp_N {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_N";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(N) N>, <&kp LC(N)>;
-    };
-    xp_M: xp_M {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_M";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(M) M>, <&kp LC(M)>;
-    };
-    xp_COMMA: xp_COMMA {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_COMMA";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(COMMA) COMMA>, <&kp LC(COMMA)>;
-    };
-    xp_DOT: xp_DOT {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_DOT";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(DOT) DOT>, <&kp LC(DOT)>;
-    };
-    xp_FSLH: xp_FSLH {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_FSLH";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(FSLH) FSLH>, <&kp LC(FSLH)>;
-    };
-    xp_GRAVE: xp_GRAVE {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_GRAVE";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(GRAVE) GRAVE>, <&kp LC(GRAVE)>;
-    };
-    xp_LBKT: xp_LBKT {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_LBKT";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(LBKT) LBKT>, <&kp LC(LBKT)>;
-    };
-    xp_RBKT: xp_RBKT {
-        compatible = "zmk,behavior-tap-dance";
-        label = "xp_RBKT";
-        #binding-cells = <0>;
-        tapping-term-ms = <135>;
-        bindings = <&mt LS(RBKT) RBKT>, <&kp LC(RBKT)>;
-    };
   };
 
     keymap {
@@ -389,30 +80,30 @@
 
         default_layer {
             bindings = <
- &xp_EQUAL &xp_N1    &xp_N2 &xp_N3 &xp_N4  &xp_N5 &tog 1                                                                     &mo 3              &xp_N6 &xp_N7 &xp_N8    &xp_N9   &xp_N0   &xp_MINUS
-      XTAB &xp_Q     &xp_W  &xp_E  &xp_R   &xp_T  &none                                                                      &none              &xp_Y  &xp_U  &xp_I     &xp_O    &xp_P    &xp_BSLH
-   &kp ESC &xp_A     &xp_S  &xp_D  &xp_F   &xp_G  &macro_unmapped  &kp LCTRL  &kp LALT   &none   &none  &kp LGUI  &kp RCTRL  &macro_ctrl_shift  &xp_H  &xp_J  &xp_K     &xp_L    &xp_SEMI &xp_SQT
- &kp LSHFT &xp_Z     &xp_X  &xp_C  &xp_V   &xp_B  &none            &none      &kp HOME   &none   &none  XPG_UP &none      &none              &xp_N  &xp_M  &xp_COMMA &xp_DOT  &xp_FSLH &kp RSHFT
-     &mo 2 &xp_GRAVE XCAPS  XLEFT  XRIGHT         XBSPC            XDEL       &kp END                   XPG_DN &kp ENTER  &kp SPACE                 XUP    XDOWN     &xp_LBKT &xp_RBKT &mo 2
+ XL(EQUAL) XL(N1)    XL(N2) XL(N3) XL(N4)  XL(N5) &tog LKP                                                           &mo LMD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
+      XTAB XL(Q)     XL(W)  XL(E)  XL(R)   XL(T)  XMOD1                                                              XMOD3        XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
+   &kp ESC XL(A)     XL(S)  XL(D)  XL(F)   XL(G)  XMOD2    XM(LCTRL)  XM(LALT)   &none   &none  &kp LGUI  XM(RCTRL)  XMOD4        XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
+ XM(LSHFT) XL(Z)     XL(X)  XL(C)  XL(V)   XL(B)  &none    &none      &kp HOME   &none   &none  XPG_UP    &none      &none        XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+&mo LFN    XL(GRAVE) XCAPS  XLEFT  XRIGHT         XBSPC    XDEL       &kp END                   XPG_DN    &kp ENTER  &kp SPACE    XUP    XDOWN  XL(LBKT)  XL(RBKT) &mo LFN
             >;
         };
 
         layer_keypad {
             bindings = <
- &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                   &mo 3  &trans  &kp KP_NUM  &kp KP_EQUAL  &kp KP_DIVIDE  &kp KP_MULTIPLY  &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &trans  &trans   &kp KP_N7     &kp KP_N8      &kp KP_N9     &kp KP_MINUS  &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans   &none   &none  &trans  &trans  &trans  &trans   &kp KP_N4     &kp KP_N5      &kp KP_N6      &kp KP_PLUS  &trans
- &trans  &trans  &trans  &trans  &trans  &trans             &none   &none  &trans   &none   &none  &trans   &none   &none  &trans   &kp KP_N1     &kp KP_N2      &kp KP_N3     &kp KP_ENTER  &trans
- &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans              &trans        &trans     &kp KP_DOT           &trans  &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &mo LMD   &trans  &kp KP_NUM  &kp KP_EQUAL  &kp KP_DIVIDE  &kp KP_MULTIPLY  &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &trans     &trans   &kp KP_N7     &kp KP_N8      &kp KP_N9     &kp KP_MINUS  &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans   &kp KP_N4     &kp KP_N5      &kp KP_N6      &kp KP_PLUS  &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans   &kp KP_N1     &kp KP_N2      &kp KP_N3     &kp KP_ENTER  &trans
+ &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans         &trans        &trans     &kp KP_DOT       &trans          &trans
             >;
         };
 
         layer_fn {
             bindings = <
- &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6            &tog 1                                                   &mo 3  &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
- &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &trans  &trans  &trans  &trans   &trans   &trans   &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans   &none   &none  &trans  &trans  &trans  &trans  &trans  &trans   &trans   &trans   &trans
- &trans  &trans  &trans  &trans  &trans  &trans             &none   &none  &trans   &none   &none  &trans   &none   &none  &trans  &trans  &trans   &trans   &trans   &trans
+ &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6            &tog LKP                                                &mo LMD   &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
+ &trans  &trans  &m_type_username_w  &m_type_email_w  &trans  &trans            &trans                                                  &trans     &trans  &m_type_username  &trans   &m_type_email_p2   &m_type_email_p1   &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans  &trans  &trans   &m_type_last_name   &trans   &trans
+ &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &m_type_name  &trans  &trans   &trans   &trans   &trans
  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans          &trans  &trans   &trans   &trans   &trans
             >;
         };
