@@ -16,10 +16,36 @@
     quick-release;
 };
 
-#define LDF 0
-#define LKP 1
-#define LFN 2
-#define LMD 3
+#define LDF 0 // Default layer
+#define LKP 1 // Keypad layer
+#define LFN 2 // Fn layer
+#define LMD 3 // MOD layer
+// TODO: Dvorak layer
+// TODO: Gaming layer with basically everything removed
+
+// TODO: Homerow mods:
+// HJKL para moverse estilo vim https://zmk.dev/docs/behaviors/hold-tap#option-2-tap-preferred
+// QWEASDZXC mouse keys??
+// S shift
+// A alt
+// C control
+// M mayus
+// G gui
+
+// See: https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
+
+// Macros para definir behaviors: https://github.com/zmkfirmware/zmk/issues/1643
+// Testing: https://zmk.dev/docs/features/beta-testing#examples
+// Custom fork: https://gist.github.com/urob/68a1e206b2356a01b876ed02d3f542c7
+// TODO: Use https://github.com/zmkfirmware/zmk/pull/649 to implement Windows + L (lock). It presses LGUI + L and then &sleep
+// TODO: dynamic macro https://github.com/zmkfirmware/zmk/pull/1351
+// TODO: evaluate hold-tap while undecided https://github.com/zmkfirmware/zmk/pull/1398
+// TODO: evaluate leader keys https://github.com/zmkfirmware/zmk/pull/1380/files
+// TODO: kp lock using https://github.com/zmkfirmware/zmk/pull/1451 . Ojo agregar KP numbers a continue-list
+// TODO: for alt tab: https://github.com/zmkfirmware/zmk/pull/1366 . See: https://github.com/caksoylar/zmk-config/commit/36d04be8a416ffa88e6c7e59e0ddee403906987b
+// TODO: ???? https://github.com/zmkfirmware/zmk/pull/1368
+// TODO: this seems useful https://github.com/zmkfirmware/zmk/pull/1387
+// TODO: consider mouse keys on QWEASDZXC https://github.com/zmkfirmware/zmk/pull/778/files
 
 // Letters. Use auto-shift.
 #define XL(keycode) &as LS(keycode) keycode
@@ -57,8 +83,6 @@
 
 // Control + Shift
 #define XMOD4 &sk LS(LCTRL)
-
-// See: https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
 
 / {
   behaviors {
