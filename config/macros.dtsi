@@ -51,7 +51,7 @@ m_type_name: m_type_name {
     wait-ms = <30>;
     tap-ms = <40>;
     bindings = <
-        &kp J &kp U &kp L &kp I &kp A &kp N
+        &kp LS(J) &kp U &kp L &kp I &kp A &kp N
     >;
 };
 
@@ -62,9 +62,9 @@ m_type_last_name: m_type_last_name {
     wait-ms = <30>;
     tap-ms = <40>;
     bindings = <
-        &kp B &kp A &kp Y &kp A &kp R &kp D &kp O
+        &kp LS(B) &kp A &kp Y &kp A &kp R &kp D &kp O
         &kp SPACE
-        &kp S &kp P &kp A &kp D &kp A &kp F &kp O &kp R &kp A
+        &kp LS(S) &kp P &kp A &kp D &kp A &kp F &kp O &kp R &kp A
     >;
 };
 
@@ -120,6 +120,25 @@ m_type_email_w: m_type_email_w {
         &kp J &kp U &kp B &kp A &kp Y &kp A &kp R &kp D
         &kp AT_SIGN
         &kp M &kp I &kp C &kp R &kp O &kp S &kp O &kp F &kp T
+        &kp DOT
+        &kp C &kp O &kp M
+    >;
+};
+
+m_type_email_pme: m_type_email_pme {
+    compatible = "zmk,behavior-macro";
+    label = "m_type_email_pme";
+    #binding-cells = <0>;
+    wait-ms = <30>;
+    tap-ms = <40>;
+    bindings = <
+        &kp J &kp U &kp B &kp A &kp Y &kp A &kp R &kp D
+        &kp AT_SIGN
+        &kp P &kp M &kp E
+        &kp DOT
+        &kp G &kp B &kp L
+        &kp DOT
+        &kp M &kp S &kp I &kp D &kp E &kp N &kp T &kp I &kp T &kp Y
         &kp DOT
         &kp C &kp O &kp M
     >;

@@ -92,7 +92,7 @@
         compatible = "zmk,behavior-hold-tap";
         label = "AUTO_SHIFT";
         #binding-cells = <2>;
-        tapping_term_ms = <135>;
+        tapping_term_ms = <200>;
         quick_tap_ms = <0>;
         flavor = "tap-preferred";
         bindings = <&kp>, <&kp>;
@@ -125,7 +125,7 @@
         layer_fn {
             bindings = <
  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6            &tog LKP                                                &mo LMD   &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
- &trans  &trans  &m_type_username_w  &m_type_email_w  &trans  &trans            &trans                                                  &trans     &trans  &m_type_username  &trans   &m_type_email_p2   &m_type_email_p1   &trans
+ &trans  &m_type_email_pme  &m_type_username_w  &m_type_email_w  &trans  &trans            &trans                                                  &trans     &trans  &m_type_username  &trans   &m_type_email_p2   &m_type_email_p1   &trans
  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans  &trans  &trans   &m_type_last_name   &trans   &trans
  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &m_type_name  &trans  &trans   &trans   &trans   &trans
  &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans          &trans  &trans   &trans   &trans   &trans
