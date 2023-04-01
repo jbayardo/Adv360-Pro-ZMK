@@ -10,6 +10,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/backlight.h>
+#include <dt-bindings/zmk/dynamic-macros.h>
 
 &sk {
     release-after-ms = <200>;
@@ -17,11 +18,10 @@
 };
 
 #define LDF 0 // Default layer
-#define LKP 1 // Keypad layer
-#define LFN 2 // Fn layer
-#define LMD 3 // MOD layer
-// TODO: Dvorak layer
-// TODO: Gaming layer with basically everything removed
+#define LGM 1 // Gaming layer
+#define LKP 2 // Keypad layer
+#define LFN 3 // Fn layer
+#define LMD 4 // MOD layer
 
 // TODO: Homerow mods:
 // HJKL para moverse estilo vim https://zmk.dev/docs/behaviors/hold-tap#option-2-tap-preferred
@@ -34,8 +34,6 @@
 
 // See: https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
 
-// Testing: https://zmk.dev/docs/features/beta-testing#examples
-
 // Letters. Use auto-shift.
 #define XL(keycode) &as LS(keycode) keycode
 
@@ -46,32 +44,45 @@
 #define XTAB &mt LG(TAB) TAB
 
 // Caps Lock. Single tap is a cap word, held tap is caps lock
-#define XCAPS &mt CAPSLOCK &caps_word
+#define XCAPS &kp CAPSLOCK
 
 // Arrow. Single tap is the action, double tap is action with control
-#define ARROW(x) &mt LC(x) x
-#define XLEFT  ARROW(LEFT)
-#define XRIGHT ARROW(RIGHT)
-#define XUP    ARROW(UP)
-#define XDOWN  ARROW(DOWN)
-#define XPG_UP ARROW(PG_UP)
-#define XPG_DN ARROW(PG_DN)
+#define WITH_CTRL(x) &mt LC(x) x
+#define WITH_ALT(x) &mt LA(x) x
+#define XLEFT  WITH_CTRL(LEFT)
+#define XRIGHT WITH_CTRL(RIGHT)
+#define XUP    WITH_ALT(UP)
+#define XDOWN  WITH_ALT(DOWN)
+#define XPG_UP WITH_CTRL(PG_UP)
+#define XPG_DN WITH_CTRL(PG_DN)
 
 // Backspace. Single tap is backspace, double tap is Control + Backspace
-#define XBSPC ARROW(BSPC)
-#define XDEL  ARROW(DEL)
+#define XBSPC WITH_CTRL(BSPC)
+#define XDEL  WITH_CTRL(DEL)
 
 // Alt + Control
-#define XMOD1 &sk LA(LCTRL)
+#define XMOD1 &xdyn
 
 // Hyper
 #define XMOD2 &sk LG(LS(LA(LCTRL)))
 
 // Alt + Shift
-#define XMOD3 &sk LS(LALT)
+#define XMOD3 &swapper
 
 // Control + Shift
 #define XMOD4 &sk LS(LCTRL)
+
+/ {
+    macros {
+        dyn: dyn {
+            label = "ZM_dynamic-macro";
+            compatible = "zmk,behavior-dynamic-macro";
+            #binding-cells = <1>;
+			no-output; // do not forward keystrokes to the host while recording
+			wait-ms = <10>; // disable so that recorded macros play back in the same speed they were recorded at
+        };
+    };
+};
 
 / {
   behaviors {
@@ -86,6 +97,22 @@
         flavor = "tap-preferred";
         bindings = <&kp>, <&kp>;
     };
+
+    xdyn: xdyn {
+        compatible = "zmk,behavior-tap-dance";
+        label = "xdyn";
+        #binding-cells = <0>;
+        tapping-term-ms = <200>;
+        bindings = <&dyn PLAY>, <&dyn RECORD>;
+    };
+
+    swapper: swapper {
+        compatible = "zmk,behavior-tri-state";
+        label = "SWAPPER";
+        #binding-cells = <0>;
+        bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+        timeout-ms = <2000>;
+    };
   };
 
     keymap {
@@ -99,6 +126,17 @@
  XM(LSHFT) XL(Z)     XL(X)  XL(C)  XL(V)   XL(B)  &none    &none      &kp HOME   &none   &none  XPG_UP    &none      &none        XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
 &mo LFN    XL(GRAVE) XCAPS  XLEFT  XRIGHT         XBSPC    XDEL       &kp END                   XPG_DN    &kp ENTER  &kp SPACE    XUP    XDOWN  XL(LBKT)  XL(RBKT) &mo LFN
             >;
+        };
+
+        // Layer with absolutely no modifications. Meant to be used for gaming and/or activities where the changes in the default layer makes things harder
+        gaming_layer {
+      bindings = <
+        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog LKP                                                                       &mo LMD &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &trans                                                                        &trans &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
+        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &trans           &kp LCTRL &kp LALT &trans &trans &kp LGUI  &kp RCTRL           &trans &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
+        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B         &trans    &trans     &kp HOME &trans &trans &kp PG_UP &trans     &trans           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &mo LFN     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END              &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo LFN
+      >;
         };
 
         layer_keypad {
