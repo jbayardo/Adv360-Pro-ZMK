@@ -19,11 +19,12 @@
 
 #define ______ &trans
 
-#define LDF 0 // Default layer
-#define LGM 1 // Gaming layer
-#define LKP 2 // Keypad layer
-#define LFN 3 // Fn layer
-#define LMD 4 // MOD layer
+#define LDF 0 // Default QWERTY layer
+#define LCO 1 // Default Colemak layer
+#define LGM 2 // QWERTY Gaming layer
+#define LKP 3 // Keypad layer
+#define LFN 4 // Fn layer
+#define LMD 5 // MOD layer
 
 // Letters. Use auto-shift.
 #define XL(keycode) &as LS(keycode) keycode
@@ -59,7 +60,7 @@
 #define XMOD1 &xdyn
 
 // Hyper
-#define XMOD2 &sk LG(LS(LA(LCTRL)))
+#define XMOD2 &sk LS(LA(LCTRL))
 
 // Smart alt tab
 #define XMOD3 &swapper
@@ -116,7 +117,7 @@
         label = "KEYPAD_BUTTON";
         #binding-cells = <0>;
         tapping-term-ms = <200>;
-        bindings = <&tog LKP>, <&to LDF>, <&to LGM>;
+        bindings = <&tog LKP>, <&to LDF>, <&to LGM>, <&to LCO>;
     };
   };
 
@@ -133,7 +134,6 @@
     //                  ╰───────╮ 74 │ 75 ╭───────╯
     //                          ╰────┴────╯
     // TODO: leader keys https://github.com/zmkfirmware/zmk/pull/1380/files#diff-30eb453ce1a964b1b556d84c779f354de32bcc080e2871b92fa83193caa38c13
-    // TODO: colemak layer
 
     keymap {
         compatible = "zmk,keymap";
@@ -144,6 +144,19 @@
       XTAB XL(Q)     XL(W)    XL(E)    XL(R)     XL(T)  XMOD1                                                            XMOD3     XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
    &kp ESC XL(A)     XL(S)    XL(D)    XL(F)     XL(G)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
  XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      &kp HOME &none   &none  XPG_UP    &none      &none     XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       &kp END                 XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
+            >;
+        };
+
+        // Slightly modified Colemak layer to fit within the Adv360 restriction. The only change is that the O is in the place of the usual QWERTY P
+        // See: https://colemak.com/
+        // See: https://dreymar.colemak.org/index.html
+        colemak_layer {
+            bindings = <
+ XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
+      XTAB XL(Q)     XL(W)    XL(F)    XL(P)     XL(G)  XMOD1                                                            XMOD3     XL(J)  XL(L)  XL(U)     XL(Y)    XL(O)    XL(BSLH)
+   &kp ESC XL(A)     XL(R)    XL(S)    XL(T)     XL(D)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(N)  XL(E)     XL(I)    XL(SEMI) XL(SQT)
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      &kp HOME &none   &none  XPG_UP    &none      &none     XL(K)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
    &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       &kp END                 XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
             >;
         };
