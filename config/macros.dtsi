@@ -1,41 +1,41 @@
-m_quotes: m_quotes {
+mquo: mquo {
     compatible = "zmk,behavior-macro";
-    label = "m_quotes";
+    label = "mquo";
     #binding-cells = <0>;
     bindings = <&kp SQT>, <&kp SQT>, <&kp LEFT>;
 };
 
-m_dquotes: m_dquotes {
+mdqu: mdqu {
     compatible = "zmk,behavior-macro";
-    label = "m_dquotes";
+    label = "mdqu";
     #binding-cells = <0>;
     bindings = <&kp DQT>, <&kp DQT>, <&kp LEFT>;
 };
 
-m_braces: m_braces {
+mbrc: mbrc {
     compatible = "zmk,behavior-macro";
-    label = "m_braces";
+    label = "mbrc";
     #binding-cells = <0>;
     bindings = <&kp LBRC>, <&kp RBRC>, <&kp LEFT>;
 };
 
-m_parens: m_parens {
+mpar: mpar {
     compatible = "zmk,behavior-macro";
-    label = "m_parens";
+    label = "mpar";
     #binding-cells = <0>;
     bindings = <&kp LPAR>, <&kp RPAR>, <&kp LEFT>;
 };
 
-m_brackets: m_brackets {
+mbrk: mbrk {
     compatible = "zmk,behavior-macro";
-    label = "m_brackets";
+    label = "mbrk";
     #binding-cells = <0>;
     bindings = <&kp LBKT>, <&kp RBKT>, <&kp LEFT>;
 };
 
-m_type_username: m_type_username {
+musr: musr {
     compatible = "zmk,behavior-macro";
-    label = "m_type_username";
+    label = "musr";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -44,9 +44,9 @@ m_type_username: m_type_username {
     >;
 };
 
-m_type_name: m_type_name {
+mfsn: mfsn {
     compatible = "zmk,behavior-macro";
-    label = "m_type_name";
+    label = "mfsn";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -55,9 +55,9 @@ m_type_name: m_type_name {
     >;
 };
 
-m_type_last_name: m_type_last_name {
+mtln: mtln {
     compatible = "zmk,behavior-macro";
-    label = "m_type_last_name";
+    label = "mtln";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -68,9 +68,9 @@ m_type_last_name: m_type_last_name {
     >;
 };
 
-m_type_email_p1: m_type_email_p1 {
+mte2: mte2 {
     compatible = "zmk,behavior-macro";
-    label = "m_type_email_p1";
+    label = "mte2";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -83,9 +83,9 @@ m_type_email_p1: m_type_email_p1 {
     >;
 };
 
-m_type_email_p2: m_type_email_p2 {
+mte1: mte1 {
     compatible = "zmk,behavior-macro";
-    label = "m_type_email_p2";
+    label = "mte1";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -99,9 +99,9 @@ m_type_email_p2: m_type_email_p2 {
     >;
 };
 
-m_type_username_w: m_type_username_w {
+mwus: mwus {
     compatible = "zmk,behavior-macro";
-    label = "m_type_username_w";
+    label = "mwus";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -110,9 +110,9 @@ m_type_username_w: m_type_username_w {
     >;
 };
 
-m_type_email_w: m_type_email_w {
+mwem: mwem {
     compatible = "zmk,behavior-macro";
-    label = "m_type_email_w";
+    label = "mwem";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;
@@ -125,9 +125,9 @@ m_type_email_w: m_type_email_w {
     >;
 };
 
-m_type_email_pme: m_type_email_pme {
+mpme: mpme {
     compatible = "zmk,behavior-macro";
-    label = "m_type_email_pme";
+    label = "mpme";
     #binding-cells = <0>;
     wait-ms = <30>;
     tap-ms = <40>;

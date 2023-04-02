@@ -17,22 +17,13 @@
     quick-release;
 };
 
+#define ______ &trans
+
 #define LDF 0 // Default layer
 #define LGM 1 // Gaming layer
 #define LKP 2 // Keypad layer
 #define LFN 3 // Fn layer
 #define LMD 4 // MOD layer
-
-// TODO: Homerow mods:
-// HJKL para moverse estilo vim https://zmk.dev/docs/behaviors/hold-tap#option-2-tap-preferred
-// QWEASDZXC mouse keys??
-// S shift
-// A alt
-// C control
-// M mayus
-// G gui
-
-// See: https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
 
 // Letters. Use auto-shift.
 #define XL(keycode) &as LS(keycode) keycode
@@ -60,13 +51,17 @@
 #define XBSPC WITH_CTRL(BSPC)
 #define XDEL  WITH_CTRL(DEL)
 
-// Alt + Control
+#define XKPAD &xkpad
+
+#define XMOD &mo LMD
+
+// Dynamic Macros
 #define XMOD1 &xdyn
 
 // Hyper
 #define XMOD2 &sk LG(LS(LA(LCTRL)))
 
-// Alt + Shift
+// Smart alt tab
 #define XMOD3 &swapper
 
 // Control + Shift
@@ -84,6 +79,8 @@
     };
 };
 
+#include "mouse.dtsi"
+
 / {
   behaviors {
     #include "macros.dtsi"
@@ -98,9 +95,9 @@
         bindings = <&kp>, <&kp>;
     };
 
-    xdyn: xdyn {
+    xdyn: dynamic_macro {
         compatible = "zmk,behavior-tap-dance";
-        label = "xdyn";
+        label = "DYNAMIC_MACRO";
         #binding-cells = <0>;
         tapping-term-ms = <200>;
         bindings = <&dyn PLAY>, <&dyn RECORD>;
@@ -111,57 +108,80 @@
         label = "SWAPPER";
         #binding-cells = <0>;
         bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
-        timeout-ms = <2000>;
+        timeout-ms = <1000>;
+    };
+
+    xkpad: keypad_button {
+        compatible = "zmk,behavior-tap-dance";
+        label = "KEYPAD_BUTTON";
+        #binding-cells = <0>;
+        tapping-term-ms = <200>;
+        bindings = <&tog LKP>, <&to LDF>, <&to LGM>;
     };
   };
+
+    // Key indexes, from https://github.com/WindChimeRan/Adv360-Pro-ZMK/blob/V2.0/config/adv360.keymap
+    //  ╭────────────────────────────┬────────────────────────────╮
+    //  │  0   1   2   3   4   5   6 │  7   8   9  10  11  12  13 │
+    //  │ 14  15  16  17  18  19  20 │ 21  22  23  24  25  26  27 │
+    //  │ 28  29  30  31  32  33  34 │ 35  36  37  38  39  40  41 │
+    //  │ 42  43  44  45  46  47 ╭───┴───╮ 48  49  50  51  52  53 │
+    //  │ 54  55  56  57  58╭────╯       ╰────╮59  60  61  62  63 │
+    //  ╰───────────────────┼────────┬────────┼───────────────────╯
+    //                  ╭───╯ 64  65 │ 66  67 ╰───╮
+    //                  │ 68  69  70 │ 71  72  73 │
+    //                  ╰───────╮ 74 │ 75 ╭───────╯
+    //                          ╰────┴────╯
+    // TODO: leader keys https://github.com/zmkfirmware/zmk/pull/1380/files#diff-30eb453ce1a964b1b556d84c779f354de32bcc080e2871b92fa83193caa38c13
+    // TODO: colemak layer
 
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
- XL(EQUAL) XL(N1)    XL(N2) XL(N3) XL(N4)  XL(N5) &tog LKP                                                           &mo LMD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
-      XTAB XL(Q)     XL(W)  XL(E)  XL(R)   XL(T)  XMOD1                                                              XMOD3        XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
-   &kp ESC XL(A)     XL(S)  XL(D)  XL(F)   XL(G)  XMOD2    XM(LCTRL)  XM(LALT)   &none   &none  &kp LGUI  XM(RCTRL)  XMOD4        XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
- XM(LSHFT) XL(Z)     XL(X)  XL(C)  XL(V)   XL(B)  &none    &none      &kp HOME   &none   &none  XPG_UP    &none      &none        XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
-&mo LFN    XL(GRAVE) XCAPS  XLEFT  XRIGHT         XBSPC    XDEL       &kp END                   XPG_DN    &kp ENTER  &kp SPACE    XUP    XDOWN  XL(LBKT)  XL(RBKT) &mo LFN
+ XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
+      XTAB XL(Q)     XL(W)    XL(E)    XL(R)     XL(T)  XMOD1                                                            XMOD3     XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
+   &kp ESC XL(A)     XL(S)    XL(D)    XL(F)     XL(G)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      &kp HOME &none   &none  XPG_UP    &none      &none     XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       &kp END                 XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
             >;
         };
 
         // Layer with absolutely no modifications. Meant to be used for gaming and/or activities where the changes in the default layer makes things harder
-        gaming_layer {
-      bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog LKP                                                                       &mo LMD &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &trans                                                                        &trans &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &trans           &kp LCTRL &kp LALT &trans &trans &kp LGUI  &kp RCTRL           &trans &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B         &trans    &trans     &kp HOME &trans &trans &kp PG_UP &trans     &trans           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo LFN     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END              &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo LFN
-      >;
+        layer_gaming {
+            bindings = <
+&kp EQUAL  &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 XKPAD                                                           XMOD      &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+&kp TAB    &kp Q     &kp W    &kp E    &kp R     &kp T  XMOD1                                                           XMOD3     &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
+&kp ESC    &kp A     &kp S    &kp D    &kp F     &kp G  XMOD2    &kp LCTRL  &kp LALT ______ ______  &kp LGUI  &kp RCTRL XMOD4     &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
+&kp LSHFT  &kp Z     &kp X    &kp C    &kp V     &kp B  ______   ______     &kp HOME ______ ______  &kp PG_UP ______    ______    &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+&mo LFN    &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT        &kp BSPC &kp DEL    &kp END                 &kp PG_DN &kp ENTER &kp SPACE        &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo LFN
+            >;
         };
 
         layer_keypad {
             bindings = <
- &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &mo LMD   &trans  &kp KP_NUM  &kp KP_EQUAL  &kp KP_DIVIDE  &kp KP_MULTIPLY  &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans                                                  &trans     &trans   &kp KP_N7     &kp KP_N8      &kp KP_N9     &kp KP_MINUS  &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans   &kp KP_N4     &kp KP_N5      &kp KP_N6      &kp KP_PLUS  &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans   &kp KP_N1     &kp KP_N2      &kp KP_N3     &kp KP_ENTER  &trans
- &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans         &trans        &trans     &kp KP_DOT       &trans          &trans
+ ______  ______  ______  ______  ______  ______ ______                                                  XMOD       ______   &kp KP_NUM    &kp KP_EQUAL   &kp KP_DIVIDE &kp KP_MULTIPLY  ______
+ ______  UBT1    UMSU    UBT2    UBT3    ______ ______                                                  ______     UWHU     &kp KP_N7     &kp KP_N8      &kp KP_N9     &kp KP_MINUS     ______
+ ______  UMSL    UMSD    UMSR    ______  ______ ______  ______  ______  ______  ______  ______  ______  ______     UWHD     &kp KP_N4     &kp KP_N5      &kp KP_N6     &kp KP_PLUS      ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______     ______   &kp KP_N1     &kp KP_N2      &kp KP_N3     &kp KP_ENTER     ______
+ ______  ______  ______  ______  ______         ______  ______  ______                  ______  ______  ______              ______        ______         &kp KP_DOT    ______           ______
             >;
         };
 
         layer_fn {
             bindings = <
- &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6            &tog LKP                                                &mo LMD   &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
- &trans  &m_type_email_pme  &m_type_username_w  &m_type_email_w  &trans  &trans            &trans                                                  &trans     &trans  &m_type_username  &trans   &m_type_email_p2   &m_type_email_p1   &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &trans  &trans  &trans   &m_type_last_name   &trans   &trans
- &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans     &m_type_name  &trans  &trans   &trans   &trans   &trans
- &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans                  &trans  &trans  &trans          &trans  &trans   &trans   &trans   &trans
+ &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6 XKPAD                                                   XMOD    &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
+ ______  &mpme   &mwus   &mwem   ______  ______ ______                                                  ______  ______  &musr   ______  &mte1    &mte2    ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______  ______  ______  ______  &mtln    ______   ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______  &mfsn   ______  ______  ______   ______   ______
+ ______  ______  ______  ______  ______         ______  ______  ______                  ______  ______  ______          ______  ______  ______   ______   ______
             >;
         };
 
         layer_mod {
             bindings = <
-  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                             &none                                                                              &trans  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &none
+  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                             &none                                                                              ______  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &none
   &none         &none         &none         &none         &none         &none                       &bootloader                                                                         &bootloader         &none         &none         &none         &none         &none   &none
   &none         &none         &none         &none         &none         &none            &rgb_ug RGB_MEFS_CMD 5  &bt BT_CLR   &none   &none   &none  &bt BT_CLR  &bt BT_CLR  &rgb_ug RGB_MEFS_CMD 5         &none         &none         &none         &none         &none   &none
   &none         &none         &none         &none         &none         &none                             &none       &none   &none   &none   &none       &none       &none                   &none         &none         &none         &none         &none         &none   &none
