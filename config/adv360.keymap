@@ -36,7 +36,7 @@
 #define XTAB &mt LG(TAB) TAB
 
 // Caps Lock. Single tap is a cap word, held tap is caps lock
-#define XCAPS &kp CAPSLOCK
+#define XCAPS &xcaps
 
 // Arrow. Single tap is the action, double tap is action with control
 #define WITH_CTRL(x) &mt LC(x) x
@@ -59,14 +59,19 @@
 // Dynamic Macros
 #define XMOD1 &xdyn
 
-// Hyper
+// Hyper. I re-map these with software to mean different things in different applications.
+// See: https://github.com/houmain/keymapper
 #define XMOD2 &sk LS(LA(LCTRL))
 
-// Smart alt tab
-#define XMOD3 &swapper
+// Smart alt tab with timeout for moving moving around different windows
+#define XMOD3 &xtab
 
-// Control + Shift
-#define XMOD4 &sk LS(LCTRL)
+// Shift + Meta for moving windows around multiple screens
+#define XMOD4 &kp LS(LGUI)
+
+#define XHOME &xhome
+
+#define XEND &xend
 
 / {
     macros {
@@ -98,15 +103,15 @@
 
     xdyn: dynamic_macro {
         compatible = "zmk,behavior-tap-dance";
-        label = "DYNAMIC_MACRO";
+        label = "XDYN";
         #binding-cells = <0>;
         tapping-term-ms = <200>;
         bindings = <&dyn PLAY>, <&dyn RECORD>;
     };
 
-    swapper: swapper {
+    xtab: xtab {
         compatible = "zmk,behavior-tri-state";
-        label = "SWAPPER";
+        label = "XTAB";
         #binding-cells = <0>;
         bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
         timeout-ms = <1000>;
@@ -114,10 +119,34 @@
 
     xkpad: keypad_button {
         compatible = "zmk,behavior-tap-dance";
-        label = "KEYPAD_BUTTON";
+        label = "XKEYPAD";
         #binding-cells = <0>;
         tapping-term-ms = <200>;
         bindings = <&tog LKP>, <&to LDF>, <&to LGM>, <&to LCO>;
+    };
+
+    xhome: xhome {
+        compatible = "zmk,behavior-tap-dance";
+        label = "XHOME";
+        #binding-cells = <0>;
+        tapping-term-ms = <200>;
+        bindings = <&kp HOME>, <&kp LS(HOME)>;
+    };
+
+    xend: xend {
+        compatible = "zmk,behavior-tap-dance";
+        label = "XEND";
+        #binding-cells = <0>;
+        tapping-term-ms = <200>;
+        bindings = <&kp END>, <&kp LS(END)>;
+    };
+
+    xcaps: xcaps {
+        compatible = "zmk,behavior-tap-dance";
+        label = "XCAPS";
+        #binding-cells = <0>;
+        tapping-term-ms = <200>;
+        bindings = <&kp CAPSLOCK>, <&caps_word>;
     };
   };
 
@@ -143,12 +172,12 @@
  XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
       XTAB XL(Q)     XL(W)    XL(E)    XL(R)     XL(T)  XMOD1                                                            XMOD3     XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
    &kp ESC XL(A)     XL(S)    XL(D)    XL(F)     XL(G)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
- XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      &kp HOME &none   &none  XPG_UP    &none      &none     XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
-   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       &kp END                 XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      XHOME    &none   &none  XPG_UP    &none      &none     XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       XEND                    XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
             >;
         };
 
-        // Slightly modified Colemak layer to fit within the Adv360 restriction. The only change is that the O is in the place of the usual QWERTY P
+        // Slightly modified Colemak layer to fit within the Adv360 default key layout. The only change is that the O is in the place of the usual QWERTY P
         // See: https://colemak.com/
         // See: https://dreymar.colemak.org/index.html
         colemak_layer {
@@ -156,8 +185,8 @@
  XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
       XTAB XL(Q)     XL(W)    XL(F)    XL(P)     XL(G)  XMOD1                                                            XMOD3     XL(J)  XL(L)  XL(U)     XL(Y)    XL(O)    XL(BSLH)
    &kp ESC XL(A)     XL(R)    XL(S)    XL(T)     XL(D)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(N)  XL(E)     XL(I)    XL(SEMI) XL(SQT)
- XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      &kp HOME &none   &none  XPG_UP    &none      &none     XL(K)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
-   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       &kp END                 XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      XHOME    &none   &none  XPG_UP    &none      &none     XL(K)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       XEND                    XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
             >;
         };
 
