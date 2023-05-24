@@ -30,6 +30,17 @@
 [2023-04-02 09:52] Julian B: https://www.reddit.com/r/ErgoMechKeyboards/comments/rxxc8s/new_zmk_features_better_homerow_mods/
 [2023-04-02 10:10] Julian B: Cómo hacer que key mapper funcione en teclados normales
 [2023-04-02 12:51] : layer que controla microfono, etc apretando mod 1 vez
+
+1. Parentesis y llaves ponen apertura y cierre, además posicionan en el medio.
+2. Vocales con doble tap ponen tilde. N pone enie.
+3. Modo de programación pone los símbolos usuales en teclas más cómodas.
+4. Mover escape arriba a la izquierda de vuelta
+5. Shortcuts para Control + Shift y Control + Alt
+6. Doble cualquier letra es Control + letra
+7. Layer que hace que todas las letras se envien con Control + Windows + Alt. Eso serviria para custom shortcuts. Duraría hasta cierta cantidad de tiempo sin tipear.
+8. Doble page down es fin de página?
+9. Doble page up es home?
+
 */
 
 // Letters. Use auto-shift.
