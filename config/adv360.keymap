@@ -26,6 +26,12 @@
 #define LFN 4 // Fn layer
 #define LMD 5 // MOD layer
 
+/*
+[2023-04-02 09:52] Julian B: https://www.reddit.com/r/ErgoMechKeyboards/comments/rxxc8s/new_zmk_features_better_homerow_mods/
+[2023-04-02 10:10] Julian B: Cómo hacer que key mapper funcione en teclados normales
+[2023-04-02 12:51] : layer que controla microfono, etc apretando mod 1 vez
+*/
+
 // Letters. Use auto-shift.
 #define XL(keycode) &as LS(keycode) keycode
 
@@ -61,7 +67,7 @@
 
 // Hyper. I re-map these with software to mean different things in different applications.
 // See: https://github.com/houmain/keymapper
-#define XMOD2 &sk LS(LA(LCTRL))
+#define XMOD2 &sk F16
 
 // Smart alt tab with timeout for moving moving around different windows
 #define XMOD3 &xtab
