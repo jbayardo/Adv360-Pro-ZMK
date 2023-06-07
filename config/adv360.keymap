@@ -184,41 +184,69 @@
     keymap {
         compatible = "zmk,keymap";
 
-    default_layer {
-      bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                                       &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                                        &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &none &none &kp LGUI  &kp RCTRL           &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B         &none    &none     &kp HOME &none &none &kp PG_UP &none     &none           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END              &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
-      >;
+        default_layer {
+            bindings = <
+ XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
+      XTAB XL(Q)     XL(W)    XL(E)    XL(R)     XL(T)  XMOD1                                                            XMOD3     XL(Y)  XL(U)  XL(I)     XL(O)    XL(P)    XL(BSLH)
+   &kp ESC XL(A)     XL(S)    XL(D)    XL(F)     XL(G)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(J)  XL(K)     XL(L)    XL(SEMI) XL(SQT)
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      XHOME    &none   &none  XPG_UP    &none      &none     XL(N)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       XEND                    XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
+            >;
+        };
+
+        // Slightly modified Colemak layer to fit within the Adv360 default key layout. The only change is that the O is in the place of the usual QWERTY P
+        // See: https://colemak.com/
+        // See: https://dreymar.colemak.org/index.html
+        colemak_layer {
+            bindings = <
+ XL(EQUAL) XL(N1)    XL(N2)   XL(N3)   XL(N4)    XL(N5) XKPAD                                                            XMOD      XL(N6) XL(N7) XL(N8)    XL(N9)   XL(N0)   XL(MINUS)
+      XTAB XL(Q)     XL(W)    XL(F)    XL(P)     XL(G)  XMOD1                                                            XMOD3     XL(J)  XL(L)  XL(U)     XL(Y)    XL(O)    XL(BSLH)
+   &kp ESC XL(A)     XL(R)    XL(S)    XL(T)     XL(D)  XMOD2    XM(LCTRL)  XM(LALT) &none   &none  &kp LGUI  XM(RCTRL)  XMOD4     XL(H)  XL(N)  XL(E)     XL(I)    XL(SEMI) XL(SQT)
+ XM(LSHFT) XL(Z)     XL(X)    XL(C)    XL(V)     XL(B)  &none    &none      XHOME    &none   &none  XPG_UP    &none      &none     XL(K)  XL(M)  XL(COMMA) XL(DOT)  XL(FSLH) XM(RSHFT)
+   &mo LFN XL(GRAVE) XCAPS    XLEFT    XRIGHT           XBSPC    XDEL       XEND                    XPG_DN    &kp ENTER  &kp SPACE        XUP    XDOWN     XL(LBKT) XL(RBKT) &mo LFN
+            >;
+        };
+
+        // Layer with absolutely no modifications. Meant to be used for gaming and/or activities where the changes in the default layer makes things harder
+        layer_gaming {
+            bindings = <
+&kp EQUAL  &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 XKPAD                                                           XMOD      &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+&kp TAB    &kp Q     &kp W    &kp E    &kp R     &kp T  XMOD1                                                           XMOD3     &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
+&kp ESC    &kp A     &kp S    &kp D    &kp F     &kp G  XMOD2    &kp LCTRL  &kp LALT ______ ______  &kp LGUI  &kp RCTRL XMOD4     &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
+&kp LSHFT  &kp Z     &kp X    &kp C    &kp V     &kp B  ______   ______     &kp HOME ______ ______  &kp PG_UP ______    ______    &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+&mo LFN    &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT        &kp BSPC &kp DEL    &kp END                 &kp PG_DN &kp ENTER &kp SPACE        &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo LFN
+            >;
+        };
+
+        layer_keypad {
+            bindings = <
+ ______  ______  ______  ______  ______  ______ ______                                                  XMOD       ______   &kp KP_NUM    &kp KP_EQUAL   &kp KP_DIVIDE &kp KP_MULTIPLY  ______
+ ______  UBT1    UMSU    UBT2    UBT3    ______ ______                                                  ______     UWHU     &kp KP_N7     &kp KP_N8      &kp KP_N9     &kp KP_MINUS     ______
+ ______  UMSL    UMSD    UMSR    ______  ______ ______  ______  ______  ______  ______  ______  ______  ______     UWHD     &kp KP_N4     &kp KP_N5      &kp KP_N6     &kp KP_PLUS      ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______     ______   &kp KP_N1     &kp KP_N2      &kp KP_N3     &kp KP_ENTER     ______
+ ______  ______  ______  ______  ______         ______  ______  ______                  ______  ______  ______              ______        ______         &kp KP_DOT    ______           ______
+            >;
+        };
+
+        layer_fn {
+            bindings = <
+ &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6 XKPAD                                                   XMOD    &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12
+ ______  &mpme   &mwus   &mwem   ______  ______ ______                                                  ______  ______  &musr   ______  &mte1    &mte2    ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______  ______  ______  ______  &mtln    ______   ______
+ ______  ______  ______  ______  ______  ______ ______  ______  ______  ______  ______  ______  ______  ______  &mfsn   ______  ______  ______   ______   ______
+ ______  ______  ______  ______  ______         ______  ______  ______                  ______  ______  ______          ______  ______  ______   ______   ______
+            >;
+        };
+
+        layer_mod {
+            bindings = <
+  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                             &none                                                                              ______  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &none
+  &none         &none         &none         &none         &none         &none                       &bootloader                                                                         &bootloader         &none         &none         &none         &none         &none   &none
+  &none         &none         &none         &none         &none         &none            &rgb_ug RGB_MEFS_CMD 5  &bt BT_CLR   &none   &none   &none  &bt BT_CLR  &bt BT_CLR  &rgb_ug RGB_MEFS_CMD 5         &none         &none         &none         &none         &none   &none
+  &none         &none         &none         &none         &none         &none                             &none       &none   &none   &none   &none       &none       &none                   &none         &none         &none         &none         &none         &none   &none
+  &none         &none         &none    &bl BL_INC    &bl BL_DEC                                 &rgb_ug RGB_TOG  &bl BL_TOG   &none                       &none  &bl BL_TOG         &rgb_ug RGB_TOG                  &bl BL_INC    &bl BL_DEC         &none         &none   &none
+            >;
+        };
+
     };
-    keypad {
-      bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &trans                                                                       &mo 3 &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                                        &none &kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &none &none &kp LGUI  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B         &none    &none     &kp HOME &none &none &kp PG_UP &none     &none           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END              &kp PG_DN &kp ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        &mo 2
-      >;
-    };
-    fn {
-      bindings = <
-        &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &tog 1                                                       &mo 3 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-        &trans &trans &trans &trans &trans &trans  &none                                                       &none &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans  &none        &trans &trans &none &none &trans &trans        &none &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans &trans        &none  &none  &trans &none &none &trans &none  &none        &trans &trans &trans &trans  &trans  &trans
-        &trans &trans &trans &trans &trans               &trans &trans &trans             &trans &trans &trans              &trans &trans &trans  &trans  &trans
-      >;
-    };
-    mod {
-      bindings = <
-        &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none                                                                                                          &trans                 &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none
-        &none &none        &none        &none        &none        &none        &bootloader                                                                                                    &bootloader            &none        &none        &none        &none        &none        &none
-        &none &none        &none        &none        &none        &none        &rgb_ug RGB_MEFS_CMD 5                 &bt BT_CLR &bt BT_CLR &none &none &bt BT_CLR &bt BT_CLR                 &rgb_ug RGB_MEFS_CMD 5 &none        &none        &none        &none        &none        &none
-        &none &none        &none        &none        &none        &none                               &none           &none      &none      &none &none &none      &none      &none                                  &none        &none        &none        &none        &none        &none
-        &none &none        &none        &bl BL_INC   &bl BL_DEC                                       &rgb_ug RGB_TOG &bl BL_TOG &none                  &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none        &none        &none
-      >;
-    };
-  };
 };
